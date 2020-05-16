@@ -1,24 +1,63 @@
-pipeline
 {
-	agent any
-	stages
+	"Description":"EC2 instance with cloud formation",
+	"Resources":
 	{
-		stage ('SCM-checkout')
+		"securityGroupDemo":
 		{
-			steps 
+			"Type":"AWS::EC2::SECURITYGROUP",
+			"Properties":
 			{
-				git branch: 'master', url: 'https://github.com/jainilaws1/awsconfigure'
-			}
-		}
-		stage ('Create Instance')
-		{
-			steps
-			{
-				withAWS(credentials: 'JAINIL-AWS-1', endpointUrl: 'https://eu-central-1.console.aws.amazon.com', region: 'eu-central') 
+				"GroupName":"sgDemo"
+				"SecurityGroupIngress":
+				[
 				{
-					sh "aws cloudformation create-stack --stack-name ec2Instance_$$ --template-body file: ec2instanceCreation.json --region 'eu-central-1'"
+					"IpProtocol":"tcp",
+					"FromPort":22,
+					"ToPort":22,
+					"CidrIp":"0.0.0.0/0",
+					"Description":"For Internet Traffic"
 				}
+				],
+				"GroupDescription":"Security Group for Demo",
+				"VpcId":"vpc-e7b9768d"
 			}
+		},
+	"EC2InstanceDemo":
+	{
+		"Type":"AWS::EC2::INSTANCE",
+		"Properties":
+		{
+			"AvailabilityZone":"eu-central-1a",
+			"BlockDeviceMappings":
+			[
+				{
+					"DeviceName":"/dev/xvda",
+					"Ebs":
+					{
+						"DeleteOnTermination":"true",
+						"VolumeSize":"8",
+						"VolumeType":"gp2"
+					}
+				}
+			],
+			"ImageId":"ami-076431be05aaf8080",
+			"InstanceType":"t2.micro",
+			"KeyName":"jainilaws1europe",
+			"NetworkingInterfaces":
+			[
+				{
+					"Description": "Primary Network Interface",
+					"DeviceIndex": "0",
+					"SubnetId": "subnet-647c9e18",
+					"GroupSet":
+					[
+						{
+							"Ref": "securityGroupDemo"
+						}
+					]
+				}
+			]
 		}
+	}
 	}
 }
