@@ -1,0 +1,24 @@
+pipeline
+{
+	agent any
+	stages
+	{
+		stage ('SCM-checkout')
+		{
+			steps 
+			{
+				git branch: 'master', url: 'https://github.com/jainilaws1/awsconfigure'
+			}
+		}
+		stage ('Create Instance')
+		{
+			steps
+			{
+				withAWS(credentials: 'JAINIL-AWS-1', endpointUrl: 'https://eu-central-1.console.aws.amazon.com', region: 'eu-central') 
+				{
+					sh "aws cloudformation create-stack --stack-name ec2Instance_$$ --template-body file: ec2instanceCreation.json --region 'eu-central-1'"
+				}
+			}
+		}
+	}
+}
