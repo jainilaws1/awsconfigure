@@ -4,15 +4,15 @@
 	{
 		"securityGroupDemo":
 		{
-			"Type":"AWS::EC2::SecurityGroup",
+			"Type":"AWS::EC2::SECURITYGROUP",
 			"Properties":
 			{
 				"GroupName":"sgDemo",
 				"SecurityGroupIngress": [
 				{
 					"IpProtocol":"tcp",
-					"FromPort":22,
-					"ToPort":22,
+					"FromPort":0,
+					"ToPort":65535,
 					"CidrIp":"0.0.0.0/0",
 					"Description":"For Internet Traffic"
 				}
@@ -23,7 +23,7 @@
 		},
 	"EC2InstanceDemo":
 	{
-		"Type":"AWS::EC2::Instance",
+		"Type":"AWS::EC2::INSTANCE",
 		"Properties":
 		{
 			"AvailabilityZone":"eu-central-1a",
@@ -41,21 +41,7 @@
 			],
 			"ImageId":"ami-076431be05aaf8080",
 			"InstanceType":"t2.micro",
-			"KeyName":"jainilaws1europe",
-			"NetworkingInterfaces":
-			[
-				{
-					"Description": "Primary Network Interface",
-					"DeviceIndex": "0",
-					"SubnetId": "subnet-647c9e18",
-					"GroupSet":
-					[
-						{
-							"Ref": "securityGroupDemo"
-						}
-					]
-				}
-			]
+			"KeyName":"jainilaws1europe"
 		}
 	}
 	}
