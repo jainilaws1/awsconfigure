@@ -4,7 +4,7 @@
 	{
 		"securityGroupDemo":
 		{
-			"Type":"AWS::EC2::SECURITYGROUP",
+			"Type":"AWS::EC2::SecurityGroup",
 			"Properties":
 			{
 				"GroupName":"sgDemo",
@@ -23,7 +23,7 @@
 		},
 	"EC2InstanceDemo":
 	{
-		"Type":"AWS::EC2::INSTANCE",
+		"Type":"AWS::EC2::Instance",
 		"Properties":
 		{
 			"AvailabilityZone":"eu-central-1a",
