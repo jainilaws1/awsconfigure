@@ -16,7 +16,7 @@ pipeline
 			{
 				withAWS(credentials: 'JAINIL-AWS-1', endpointUrl: 'https://eu-central-1.console.aws.amazon.com', region: 'eu-central') 
 				{
-					sh "aws cloudformation create-stack --stack-name ec2Instance --template-body file://ec2instanceCreation.json --region 'eu-central-1'"
+					sh "aws cloudformation create-stack --stack-name ec2Instance_${BUILD_NUMBER} --template-body file://ec2instanceCreation.json --region 'eu-central-1'"
 				}
 			}
 		}
