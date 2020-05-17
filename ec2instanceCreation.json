@@ -8,7 +8,7 @@
 			"Properties":
 			{
 				"GroupName":"sgDemo"
-				"SecurityGroupIngress":
+				"SecurityGroupIngress" :
 				[
 				{
 					"IpProtocol":"tcp",
